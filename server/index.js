@@ -1,30 +1,12 @@
-const { ApolloServer, gql } = require("apollo-server");
-const { mainCards, animals } = require("./db");
-const typeDefs = gql`
-  type MainCard {
-    title: String
-    image: String
-  }
-  type Animal {
-    id: ID!
-    image: String!
-    title: String!
-    rating: Float
-    price: String!
-    description: [String!]!
-    stock: Int!
-    onSale: Boolean
-    slug: String
-    category: String
-  }
-  type Query {
-    mainCards: [MainCard]
-    animals: [Animal]
-    animal(slug: String!): Animal
-  }
-`;
+const { ApolloServer } = require("apollo-server");
+const { mainCards, animals, categories } = require("./db");
+const typeDefs = require("./schema");
+const Query = require("./resolvers/Query");
+const Category = require("./resolvers/Category");
+const Animal = require("./resolvers/Animal");
+const Mutation = require("./resolvers/Mutation");
 
-const resolvers = {
+/* const resolvers = {
   Query: {
     mainCards: () => mainCards,
     animals: () => animals,
@@ -34,10 +16,44 @@ const resolvers = {
       });
       return animalToBeFound;
     }, //the arguments are(parent, args, context)
+    categories: () => categories,
+    category: (parents, args, cxt) => {
+      let category = categories.find((category) => {
+        return category.slug === args.slug;
+      });
+      return category;
+    },
   },
-};
+  Category: {
+    animals: (parents, args, ctx) => {
+      return animals.filter((animal) => {
+        return animal.category === parents.id;
+      });
+    },
+  },
+  Animal: {
+    category: (parent, args, cxt) => {
+      return categories.find((category) => {
+        return category.id === parent.category;
+      });
+    },
+  },
+}; */
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers: {
+    Animal,
+    Category,
+    Query,
+    Mutation,
+  },
+  context: {
+    mainCards,
+    animals,
+    categories,
+  },
+});
 
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {
