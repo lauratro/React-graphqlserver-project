@@ -1,13 +1,13 @@
 const Query = {
   mainCards: () => mainCards,
-  animals: () => animals,
+  animals: (parent, args, { animals }) => animals,
   animal: (parent, args, { animals }) => {
-    let animalToBeFound = animals.find((animal) => {
+    let animal = animals.find((animal) => {
       return animal.slug === args.slug;
     });
-    return animalToBeFound;
+    return animal;
   },
-  categories: () => categories,
+  categories: (parents, args, { categories }) => categories,
   category: (parents, args, { categories }) => {
     let category = categories.find((category) => {
       return category.slug === args.slug;
