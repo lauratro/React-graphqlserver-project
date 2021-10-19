@@ -44,6 +44,8 @@ const typeDefs = gql`
       slug: String
       category: String
     ): Animal
+    removeAnimal(id: ID!): Boolean!
   }
 `;
+/* return a boolean if the the delete process was successful  */
 module.exports = typeDefs;
