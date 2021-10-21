@@ -7,6 +7,7 @@ import { useQuery, gql } from "@apollo/client";
 const QUERY_ANIMALS = gql`
   {
     animals {
+      title
       image
       id
       price
