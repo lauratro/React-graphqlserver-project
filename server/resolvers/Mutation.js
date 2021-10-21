@@ -25,7 +25,8 @@ const Mutation = {
     let index = animals.findIndex((animal) => {
       return animal.id === id;
     });
-    animals.splice(index);
+    animals.splice(index, 1);
+    return true;
   },
 };
 module.exports = Mutation;
