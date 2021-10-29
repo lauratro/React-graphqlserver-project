@@ -1,4 +1,7 @@
 const { ApolloServer } = require("apollo-server");
+const {
+  ApolloServerPluginLandingPageGraphQLPlayground,
+} = require("apollo-server-core");
 const { mainCards, animals, categories } = require("./db");
 const typeDefs = require("./schema");
 const Query = require("./resolvers/Query");
@@ -41,6 +44,7 @@ const Mutation = require("./resolvers/Mutation");
 }; */
 
 const server = new ApolloServer({
+  plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
   typeDefs,
   resolvers: {
     Animal,
