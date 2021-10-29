@@ -2,13 +2,21 @@ const { ApolloServer } = require("apollo-server");
 const {
   ApolloServerPluginLandingPageGraphQLPlayground,
 } = require("apollo-server-core");
+const mongoose = require("mongoose");
 const { mainCards, animals, categories } = require("./db");
 const typeDefs = require("./schema");
 const Query = require("./resolvers/Query");
 const Category = require("./resolvers/Category");
 const Animal = require("./resolvers/Animal");
 const Mutation = require("./resolvers/Mutation");
+const { mongoURI } = require("./config");
+const dotenv = require("dotenv");
+dotenv.config({ path: __dirname + "/.env" });
 
+require("dotenv").config();
+console.log(mongoURI);
+console.log(process.env.MONGO_URI);
+const port = 4000;
 /* const resolvers = {
   Query: {
     mainCards: () => mainCards,
@@ -44,7 +52,7 @@ const Mutation = require("./resolvers/Mutation");
 }; */
 
 const server = new ApolloServer({
-  plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+  //  plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
   typeDefs,
   resolvers: {
     Animal,
@@ -58,8 +66,14 @@ const server = new ApolloServer({
     categories,
   },
 });
-
-// The `listen` method launches a web server.
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+  })
+  .then(() => {
+    console.log("MongoDB connected");
+    return server.listen({ port: 4000 });
+  })
+  .then((res) => {
+    console.log(`🚀  Server ready at ${res.url}`);
+  });
