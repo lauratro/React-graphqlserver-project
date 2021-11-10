@@ -5,6 +5,12 @@ const typeDefs = gql`
     title: String
     image: String
   }
+  type Post {
+    id: ID!
+    image: String
+    title: String
+    price: String
+  }
   type Animal {
     id: ID!
     image: String!
@@ -26,6 +32,7 @@ const typeDefs = gql`
     animals: [Animal!]!
   }
   type Query {
+    getPosts: [Post]
     mainCards: [MainCard]
     animals: [Animal]
     animal(slug: String!): Animal
