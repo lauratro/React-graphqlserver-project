@@ -1,15 +1,13 @@
 const { model, Schema } = require("mongoose");
 const postSchema = new Schema({
-  id: String,
   image: String,
   title: String,
-  rating: Number | 5.0,
   price: String,
-  description: [String],
-  stock: Number | 14,
-  onSale: Boolean,
-  slug: String,
-  category: String,
+
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "users",
+  },
 });
 
-module.export = model("post", postSchema);
+module.exports = model("Post", postSchema);

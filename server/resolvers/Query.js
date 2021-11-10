@@ -1,4 +1,15 @@
+const Post = require("../models/Post");
+
 const Query = {
+  async getPosts() {
+    try {
+      const posts = await Post.find();
+      console.log("p", posts);
+      return posts;
+    } catch (err) {
+      throw new Error(err);
+    }
+  },
   mainCards: (parent, args, { mainCards }) => mainCards,
   animals: (parent, args, { animals }) => animals,
   animal: (parent, args, { animals }) => {

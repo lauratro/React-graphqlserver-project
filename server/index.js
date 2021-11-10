@@ -16,6 +16,7 @@ dotenv.config({ path: __dirname + "/.env" });
 require("dotenv").config();
 console.log(mongoURI);
 console.log(process.env.MONGO_URI);
+
 const port = 4000;
 /* const resolvers = {
   Query: {
@@ -52,7 +53,7 @@ const port = 4000;
 }; */
 
 const server = new ApolloServer({
-  //  plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+  plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
   typeDefs,
   resolvers: {
     Animal,
