@@ -1,6 +1,6 @@
 const Post = require("../models/Post");
 
-const Query = {
+const QueryOld = {
   async getPosts() {
     try {
       const posts = await Post.find();
@@ -27,4 +27,4 @@ const Query = {
   },
 };
 
-module.exports = Query;
+module.exports = QueryOld;

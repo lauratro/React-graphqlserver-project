@@ -1,5 +1,6 @@
 const { v4 } = require("uuid");
 const { animals } = require("./Query");
+const Post = require("../models/Post");
 const Mutation = {
   addAnimal: (
     parent,
